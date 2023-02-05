@@ -32,6 +32,8 @@ class CodeEditor extends StatelessWidget {
           child: SingleChildScrollView(
             child: CodeField(
               controller: controller,
+              wrap: true,
+              gutterStyle: const GutterStyle(showErrors: false),
             ),
           ),
         ),
