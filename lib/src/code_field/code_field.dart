@@ -261,7 +261,7 @@ class _CodeFieldState extends State<CodeField> {
     if (context != null) {
       windowSize = MediaQuery.of(context).size;
     } else {
-      windowSize = Size(1024, 768);
+      windowSize = const Size(1024, 768);
     }
   }
 
