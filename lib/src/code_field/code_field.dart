@@ -215,9 +215,7 @@ class _CodeFieldState extends State<CodeField> {
     disableSpellCheckIfWeb();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final double width = _codeFieldKey.currentContext!.size!.width;
-      final double height = _codeFieldKey.currentContext!.size!.height;
-      windowSize = Size(width, height);
+      _updateWindowSize();
     });
     _onTextChanged();
   }
@@ -252,16 +250,19 @@ class _CodeFieldState extends State<CodeField> {
   void rebuild() {
     setState(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        // For some reason _codeFieldKey.currentContext is null in tests
-        // so check first.
-        final context = _codeFieldKey.currentContext;
-        if (context != null) {
-          final double width = context.size!.width;
-          final double height = context.size!.height;
-          windowSize = Size(width, height);
-        }
+        _updateWindowSize();
       });
     });
+  }
+
+  void _updateWindowSize() {
+    // For some reason _codeFieldKey.currentContext is null in tests.
+    final context = _codeFieldKey.currentContext;
+    if (context != null) {
+      windowSize = MediaQuery.of(context).size;
+    } else {
+      windowSize = Size(1024, 768);
+    }
   }
 
   void _onTextChanged() {
